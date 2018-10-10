@@ -18,7 +18,7 @@ func NewBlock(b, e time.Time) Block {
 	return Block{
 		B: b,
 		E: e,
-		P: NewRangeAt(b, e),
+		P: At(b, e),
 	}
 }
 

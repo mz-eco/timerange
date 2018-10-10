@@ -1,22 +1,24 @@
 package timerange
 
-import "time"
+import (
+	"time"
+)
 
 type week int
 
-func (m week) Next(o time.Time) time.Time {
+func (m week) Current(o time.Time) time.Time {
 
 	var (
 		wd       = weekday(o)
 		y, mm, d = o.Date()
 	)
 
-	return date(y, mm, d+(7-wd))
+	return date(y, mm, d-wd)
 
 }
 
-func (m week) Current(o time.Time) time.Time {
-	return m.Next(o).AddDate(0, 0, -7)
+func (m week) Next(o time.Time) time.Time {
+	return m.Current(o).AddDate(0, 0, 7)
 }
 
 func (m week) IsWhole(now time.Time) bool {

@@ -33,7 +33,7 @@ func (m minute) Current(o time.Time) time.Time {
 }
 
 func (m minute) Preview(o time.Time) time.Time {
-	return current(o,m)
+	return preview(o,m)
 }
 
 func (m minute) IsWhole(now time.Time) bool {

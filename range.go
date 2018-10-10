@@ -22,31 +22,31 @@ func (m TimeRange) Truncate(iv Whole) (head, tail, body TimeRange) {
 func (m TimeRange) Head(iv Whole) (head, body TimeRange) {
 
 	if iv.IsWhole(m.b) {
-		return NewRangeAt(m.b, m.b), m
+		return At(m.b, m.b), m
 	}
 
 	e := iv.Next(m.b)
 
 	if e.After(m.e) {
-		return m, NewRangeAt(m.e, m.e)
+		return m, At(m.e, m.e)
 	}
 
-	return NewRangeAt(m.b, e), NewRangeAt(e, m.e)
+	return At(m.b, e), At(e, m.e)
 }
 
 func (m TimeRange) Tail(iv Whole) (tail, body TimeRange) {
 
 	if iv.IsWhole(m.e) {
-		return NewRangeAt(m.e, m.e), m
+		return At(m.e, m.e), m
 	}
 
 	e := iv.Current(m.e)
 
 	if e.Before(m.b) {
-		return m, NewRangeAt(m.b, m.b)
+		return m, At(m.b, m.b)
 	}
 
-	return NewRangeAt(e, m.e), NewRangeAt(m.b, e)
+	return At(e, m.e), At(m.b, e)
 }
 
 func (m TimeRange) Trim(iv Whole) TimeRange {
@@ -56,31 +56,31 @@ func (m TimeRange) Trim(iv Whole) TimeRange {
 func (m TimeRange) TrimRight(iv Whole) TimeRange {
 
 	if iv.IsWhole(m.e) {
-		return NewRangeAt(m.e, m.e)
+		return At(m.e, m.e)
 	}
 
 	e := iv.Current(m.e)
 
 	if e.Before(m.b) {
-		return NewRangeAt(m.b, m.b)
+		return At(m.b, m.b)
 	}
 
-	return NewRangeAt(m.b, e)
+	return At(m.b, e)
 }
 
 func (m TimeRange) TrimLeft(iv Whole) TimeRange {
 
 	if iv.IsWhole(m.b) {
-		return NewRangeAt(m.b, m.b)
+		return At(m.b, m.b)
 	}
 
 	b := iv.Next(m.b)
 
 	if b.After(m.e) {
-		return NewRangeAt(m.e, m.e)
+		return At(m.e, m.e)
 	}
 
-	return NewRangeAt(b, m.e)
+	return At(b, m.e)
 }
 
 func (m TimeRange) Empty() bool {
@@ -193,7 +193,7 @@ func (m TimeRange) IsZero() bool {
 	return m.b.Equal(m.e)
 }
 
-func NewRangeAt(b, e time.Time) TimeRange {
+func At(b, e time.Time) TimeRange {
 
 	if b.After(e) {
 		return TimeRange{
@@ -208,8 +208,9 @@ func NewRangeAt(b, e time.Time) TimeRange {
 	}
 }
 
-func NewRange(b time.Time, iv Interval) TimeRange {
-	return NewRangeAt(
+
+func New(b time.Time, iv Interval) TimeRange {
+	return At(
 		b,
 		iv.Add(b))
 }
@@ -219,9 +220,21 @@ func Now(w Whole) TimeRange {
 		now = time.Now()
 	)
 
-	return NewRangeAt(
+	return At(
 		w.Current(now),
 		w.Next(now))
+}
+
+
+func NowTo(iv Interval) TimeRange {
+
+	var (
+		now = time.Now()
+	)
+	return At(
+		now,
+		iv.Add(now),
+	)
 }
 
 func Today() TimeRange {
