@@ -1,4 +1,4 @@
-package monent
+package timerange
 
 import (
 	"fmt"
