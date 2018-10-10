@@ -28,6 +28,24 @@ var (
 		Year,
 		Week,
 	}
+	tAddTowDays = []Interval {
+		2*Second,
+		2*Minute,
+		2*Hour,
+		2*Day,
+		2*Month,
+		2*Year,
+		2*Week,
+	}
+	tSubTowDays = []Interval {
+		-2*Second,
+		-2*Minute,
+		-2*Hour,
+		-2*Day,
+		-2*Month,
+		-2*Year,
+		-2*Week,
+	}
 	tWholes = []Whole {
 		Second,
 		Minute,
@@ -64,6 +82,26 @@ var (
 		time.Date(2018,time.January,01,00,00,00,0,time.Local),
 		time.Date(2019,time.September,30,00,00,00,0,time.Local),
 	}
+	tAddTwoDay = []time.Time{
+		tDate.Add(2*time.Second),
+		tDate.Add(2*time.Minute),
+		tDate.Add(2*time.Hour),
+		tDate.AddDate(0,0,2),
+		tDate.AddDate(0,2,0),
+		tDate.AddDate(2,0,0),
+		time.Date(2019,time.October,21,11,58,58,0,time.Local),
+	}
+	tAddWeek = time.Date(2019,time.October,14,11,58,58,0,time.Local)
+	tSubTwoDay = []time.Time{
+		tDate.Add(-2*time.Second),
+		tDate.Add(-2*time.Minute),
+		tDate.Add(-2*time.Hour),
+		tDate.AddDate(0,0,-2),
+		tDate.AddDate(0,-2,0),
+		tDate.AddDate(-2,0,0),
+		time.Date(2019,time.September,23,11,58,58,0,time.Local),
+	}
+	tSubWeek = time.Date(2019,time.September,30,11,58,58,0,time.Local)
 )
 
 
@@ -102,4 +140,44 @@ func TestPreview(t *testing.T) {
 	}
 }
 
+func TestBegin(t *testing.T) {
+	for index, iv := range tWholes {
+		tTimeEqual(
+			t,
+			iv,
+			Begin(tDate,iv), tTimes[index])
+	}
+}
+
+func TestAddTwoDays(t *testing.T) {
+	for index, iv := range tAddTowDays {
+		tTimeEqual(
+			t,
+			iv,
+			Add(tDate,iv), tAddTwoDay[index])
+	}
+
+	tTimeEqual(
+		t,
+		1*Week,
+		Add(tDate,1*Week),
+		tAddWeek,
+		)
+}
+
+func TestSubTwoDays(t *testing.T) {
+	for index, iv := range tSubTowDays {
+		tTimeEqual(
+			t,
+			iv,
+			Add(tDate,iv), tSubTwoDay[index])
+	}
+
+	tTimeEqual(
+		t,
+		-1*Week,
+		Add(tDate,-1*Week),
+		tSubWeek,
+	)
+}
 
