@@ -18,7 +18,7 @@ const (
 func Add(now time.Time, ivs ...Interval) time.Time {
 
 	for _, iv := range ivs {
-		now = iv.Add(now)
+		now = iv.AddTo(now)
 	}
 
 	return now

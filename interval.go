@@ -34,7 +34,7 @@ type Interval interface {
 	//+-----------+-----------+-----------+
 	//                  *
 	//                  ^
-	Add(now time.Time) time.Time
+	AddTo(now time.Time) time.Time
 
 	//时间点在数轴上的移动方向
 	Allow() Allow

@@ -70,3 +70,13 @@ func weekday(now time.Time) int {
 
 	return 0
 }
+
+func now(w Whole) TimeRange {
+	var (
+		now = time.Now()
+	)
+
+	return Range(
+		w.Current(now),
+		w.Next(now))
+}

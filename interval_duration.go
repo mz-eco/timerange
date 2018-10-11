@@ -4,7 +4,7 @@ import "time"
 
 type Duration time.Duration
 
-func (m Duration) Add(o time.Time) time.Time {
+func (m Duration) AddTo(o time.Time) time.Time {
 	return o.Add(time.Duration(m))
 }
 

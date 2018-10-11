@@ -10,7 +10,7 @@ type Fixed struct {
 	duration time.Duration
 }
 
-func (m *Fixed) Add(now time.Time) time.Time {
+func (m *Fixed) AddTo(now time.Time) time.Time {
 	return now.Add(m.duration).AddDate(0, 0, m.days)
 }
 

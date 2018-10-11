@@ -16,9 +16,27 @@ func (m second) Date(year int, month time.Month, day int, hour int, minute int,s
 		time.Local)
 }
 
-func Seconds(size int) second {
+func Seconds(size int) Interval {
 	return second(size)
 }
+
+func (m second) To(b time.Time, size int) TimeRange {
+	return RangeTo(
+		Truncate(b,m),
+		second(size))
+}
+
+func (m second) At(now time.Time) TimeRange {
+	return RangeAt(now,m)
+}
+
+func (m second) Range(b,e time.Time) TimeRange {
+	return Range(
+		Truncate(b,m),
+		Truncate(e,m),
+	)
+}
+
 
 func (m second) GetValue() time.Duration {
 	return time.Duration(m)
@@ -44,7 +62,7 @@ func (m second) IsWhole(now time.Time) bool {
 	return m.Current(now).Equal(now)
 }
 
-func (m second) Add(o time.Time) time.Time {
+func (m second) AddTo(o time.Time) time.Time {
 	return o.Add(time.Duration(m) * time.Second)
 }
 

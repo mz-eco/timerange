@@ -16,8 +16,25 @@ func (m hour) Date(year int, month time.Month, day int, hour int) time.Time {
 		time.Local)
 }
 
-func Hours(size int) hour {
+func Hours(size int) Interval {
 	return hour(size)
+}
+
+func (m hour) To(b time.Time, size int) TimeRange {
+	return RangeTo(
+		Truncate(b,m),
+		hour(size))
+}
+
+func (m hour) At(now time.Time) TimeRange {
+	return RangeAt(now,m)
+}
+
+func (m hour) Range(b,e time.Time) TimeRange {
+	return Range(
+		Truncate(b,m),
+		Truncate(e,m),
+	)
 }
 
 func (m hour) GetValue() time.Duration {
@@ -44,7 +61,7 @@ func (m hour) IsWhole(now time.Time) bool {
 	return m.Current(now).Equal(now)
 }
 
-func (m hour) Add(o time.Time) time.Time {
+func (m hour) AddTo(o time.Time) time.Time {
 	return o.Add(time.Duration(m) * time.Hour)
 }
 

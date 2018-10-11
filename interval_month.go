@@ -8,9 +8,27 @@ func (m month) Date(year int, month time.Month) time.Time {
 	return date(year,month,1)
 }
 
-func Months(size int) month {
+func Months(size int) Interval {
 	return month(size)
 }
+
+func (m month) To(b time.Time, size int) TimeRange {
+	return RangeTo(
+		Truncate(b,m),
+		month(size))
+}
+
+func (m month) At(now time.Time) TimeRange {
+	return RangeAt(now,m)
+}
+
+func (m month) Range(b,e time.Time) TimeRange {
+	return Range(
+		Truncate(b,m),
+		Truncate(e,m),
+	)
+}
+
 
 func (m month) Next(o time.Time) time.Time {
 	var (
@@ -40,7 +58,7 @@ func (m month) IsWhole(now time.Time) bool {
 	return m.Current(now).Equal(now)
 }
 
-func (m month) Add(o time.Time) time.Time {
+func (m month) AddTo(o time.Time) time.Time {
 	return o.AddDate(0, int(m), 0)
 }
 

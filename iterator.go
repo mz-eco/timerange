@@ -18,7 +18,7 @@ func NewBlock(b, e time.Time) Block {
 	return Block{
 		B: b,
 		E: e,
-		P: NewRangeAt(b, e),
+		P: Range(b, e),
 	}
 }
 
@@ -66,7 +66,7 @@ func (m *Iterator) Next() bool {
 			return false
 		}
 
-		next := m.iv.Add(m.c)
+		next := m.iv.AddTo(m.c)
 
 		if !next.Before(m.p.e) {
 			m.Current = NewBlock(m.c, m.p.e)
@@ -84,7 +84,7 @@ func (m *Iterator) Next() bool {
 			return false
 		}
 
-		next := m.iv.Add(m.c)
+		next := m.iv.AddTo(m.c)
 
 		if !next.After(m.p.b) {
 			m.Current = NewBlock(m.p.b, m.c)

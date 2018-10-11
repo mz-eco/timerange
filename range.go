@@ -19,34 +19,54 @@ func (m TimeRange) Truncate(iv Whole) (head, tail, body TimeRange) {
 	return
 }
 
+func (m TimeRange) Day() TimeRange {
+	return Day.At(m.b)
+}
+
+func (m TimeRange) Month() TimeRange {
+	return Month.At(m.b)
+}
+
+func (m TimeRange) Year() TimeRange {
+	return Year.At(m.b)
+}
+
+func (m TimeRange) Begin() time.Time {
+	return m.b
+}
+
+func (m TimeRange) End() time.Time {
+	return m.e.Add(-1*time.Nanosecond)
+}
+
 func (m TimeRange) Head(iv Whole) (head, body TimeRange) {
 
 	if iv.IsWhole(m.b) {
-		return NewRangeAt(m.b, m.b), m
+		return Range(m.b, m.b), m
 	}
 
 	e := iv.Next(m.b)
 
 	if e.After(m.e) {
-		return m, NewRangeAt(m.e, m.e)
+		return m, Range(m.e, m.e)
 	}
 
-	return NewRangeAt(m.b, e), NewRangeAt(e, m.e)
+	return Range(m.b, e), Range(e, m.e)
 }
 
 func (m TimeRange) Tail(iv Whole) (tail, body TimeRange) {
 
 	if iv.IsWhole(m.e) {
-		return NewRangeAt(m.e, m.e), m
+		return Range(m.e, m.e), m
 	}
 
 	e := iv.Current(m.e)
 
 	if e.Before(m.b) {
-		return m, NewRangeAt(m.b, m.b)
+		return m, Range(m.b, m.b)
 	}
 
-	return NewRangeAt(e, m.e), NewRangeAt(m.b, e)
+	return Range(e, m.e), Range(m.b, e)
 }
 
 func (m TimeRange) Trim(iv Whole) TimeRange {
@@ -56,31 +76,31 @@ func (m TimeRange) Trim(iv Whole) TimeRange {
 func (m TimeRange) TrimRight(iv Whole) TimeRange {
 
 	if iv.IsWhole(m.e) {
-		return NewRangeAt(m.e, m.e)
+		return Range(m.e, m.e)
 	}
 
 	e := iv.Current(m.e)
 
 	if e.Before(m.b) {
-		return NewRangeAt(m.b, m.b)
+		return Range(m.b, m.b)
 	}
 
-	return NewRangeAt(m.b, e)
+	return Range(m.b, e)
 }
 
 func (m TimeRange) TrimLeft(iv Whole) TimeRange {
 
 	if iv.IsWhole(m.b) {
-		return NewRangeAt(m.b, m.b)
+		return Range(m.b, m.b)
 	}
 
 	b := iv.Next(m.b)
 
 	if b.After(m.e) {
-		return NewRangeAt(m.e, m.e)
+		return Range(m.e, m.e)
 	}
 
-	return NewRangeAt(b, m.e)
+	return Range(b, m.e)
 }
 
 func (m TimeRange) Empty() bool {
@@ -107,8 +127,8 @@ func (m TimeRange) Format(format string) string {
 func (m TimeRange) Add(interval Interval) TimeRange {
 
 	return TimeRange{
-		b: interval.Add(m.b),
-		e: interval.Add(m.e),
+		b: interval.AddTo(m.b),
+		e: interval.AddTo(m.e),
 	}
 }
 
@@ -193,7 +213,7 @@ func (m TimeRange) IsZero() bool {
 	return m.b.Equal(m.e)
 }
 
-func NewRangeAt(b, e time.Time) TimeRange {
+func Range(b, e time.Time) TimeRange {
 
 	if b.After(e) {
 		return TimeRange{
@@ -208,21 +228,21 @@ func NewRangeAt(b, e time.Time) TimeRange {
 	}
 }
 
-func NewRange(b time.Time, iv Interval) TimeRange {
-	return NewRangeAt(
-		b,
-		iv.Add(b))
-}
+func RangeAt(now time.Time, w Whole) TimeRange {
 
-func Now(w Whole) TimeRange {
-	var (
-		now = time.Now()
-	)
-
-	return NewRangeAt(
+	return Range(
 		w.Current(now),
-		w.Next(now))
+		w.Next(now),
+		)
 }
+
+func RangeTo(b time.Time, iv Interval) TimeRange {
+	return Range(
+		b,
+		iv.AddTo(b))
+}
+
+
 
 
 func NowTo(iv Interval) TimeRange {
@@ -230,14 +250,10 @@ func NowTo(iv Interval) TimeRange {
 	var (
 		now = time.Now()
 	)
-	return NewRangeAt(
+	return Range(
 		now,
-		iv.Add(now),
+		iv.AddTo(now),
 	)
-}
-
-func Today() TimeRange {
-	return Now(Day)
 }
 
 

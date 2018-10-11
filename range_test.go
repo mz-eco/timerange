@@ -185,7 +185,7 @@ func TestNewAdd(t *testing.T) {
 
 	for index,iv :=range tAddTwoDays {
 
-		tr := NewRange(tDate, iv)
+		tr := RangeTo(tDate, iv)
 
 		tTimeEqual(
 			t,
@@ -199,7 +199,7 @@ func TestNewAdd(t *testing.T) {
 			tAddTwoDay[index])
 	}
 
-	tr := NewRange(tDate, 1*Week)
+	tr := RangeTo(tDate, 1*Week)
 
 	tTimeEqual(
 		t,
@@ -215,7 +215,7 @@ func TestNewAdd(t *testing.T) {
 
 func TestTimeRange_Equal(t *testing.T) {
 
-	if !(NewRange(tDate,Day).Equal(NewRange(tDate,24*Hour))) {
+	if !(RangeTo(tDate,Day).Equal(RangeTo(tDate,24*Hour))) {
 		t.Errorf("time range not equal")
 	}
 }
@@ -224,7 +224,7 @@ func TestNewSub(t *testing.T) {
 
 	for index,iv :=range tSubTowDays {
 
-		tr := NewRange(tDate, iv)
+		tr := RangeTo(tDate, iv)
 
 		tTimeEqual(
 			t,
@@ -238,7 +238,7 @@ func TestNewSub(t *testing.T) {
 			tSubTwoDay[index])
 	}
 
-	tr := NewRange(tDate, -1*Week)
+	tr := RangeTo(tDate, -1*Week)
 
 	tTimeEqual(
 		t,

@@ -16,10 +16,30 @@ func (m minute) Date(year int, month time.Month, day int, hour int, minute int) 
 		time.Local)
 }
 
-func Minutes(size int) minute {
+func Minutes(size int) Interval {
 	return minute(size)
 }
 
+func (m minute) Now() TimeRange {
+	return now(m)
+}
+
+func (m minute) To(b time.Time, size int) TimeRange {
+	return RangeTo(
+		Truncate(b,m),
+		minute(size))
+}
+
+func (m minute) At(now time.Time) TimeRange {
+	return RangeAt(now,m)
+}
+
+func (m minute) Range(b,e time.Time) TimeRange {
+	return Range(
+		Truncate(b,m),
+		Truncate(e,m),
+	)
+}
 
 func (m minute) GetValue() time.Duration {
 	return time.Duration(m)
@@ -45,7 +65,7 @@ func (m minute) IsWhole(now time.Time) bool {
 	return m.Current(now).Equal(now)
 }
 
-func (m minute) Add(o time.Time) time.Time {
+func (m minute) AddTo(o time.Time) time.Time {
 	return o.Add(time.Duration(m) * time.Minute)
 }
 

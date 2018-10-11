@@ -17,7 +17,28 @@ func (m week) Current(o time.Time) time.Time {
 
 }
 
-func Weeks(size int) week {
+func (m week) Now() TimeRange {
+	return now(m)
+}
+
+func (m week) To(b time.Time, size int) TimeRange {
+	return RangeTo(
+		Truncate(b,m),
+		week(size))
+}
+
+func (m week) At(now time.Time) TimeRange {
+	return RangeAt(now,m)
+}
+
+func (m week) Range(b,e time.Time) TimeRange {
+	return Range(
+		Truncate(b,m),
+		Truncate(e,m),
+	)
+}
+
+func Weeks(size int) Interval {
 	return week(size)
 }
 
@@ -33,7 +54,7 @@ func (m week) Preview(o time.Time) time.Time {
 	return m.Current(o).AddDate(0,0,-7)
 }
 
-func (m week) Add(o time.Time) time.Time {
+func (m week) AddTo(o time.Time) time.Time {
 
 	var (
 		wd = weekday(o)
