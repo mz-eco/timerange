@@ -25,7 +25,7 @@ func valueCompare(t *testing.T,x[]TimeRange,y []Block) {
 			t.Errorf("range src<%s> not equal <%s>", value,y[index])
 		}
 
-		if !value.Equal(At(y[index].B,y[index].E)) {
+		if !value.Equal(NewRangeAt(y[index].B,y[index].E)) {
 			t.Errorf("range src<%s> not equal <%s>", value,y[index])
 		}
 	}
@@ -43,13 +43,13 @@ func TestSplitSeconds(t *testing.T) {
 	var times = make([]TimeRange,0)
 
 	for i:=time.Duration(0);i<120;i++ {
-		times = append(times,New(tDate.Add(i*time.Second),Second))
+		times = append(times, NewRange(tDate.Add(i*time.Second),Second))
 	}
 
 	valueCompare(
 		t,
 		times,
-		Split(New(tDate, 2*Minute),Second))
+		Split(NewRange(tDate, 2*Minute),Second))
 
 }
 
@@ -58,13 +58,13 @@ func TestSplitMinute(t *testing.T) {
 	var times = make([]TimeRange,0)
 
 	for i:=0;i<120;i++ {
-		times = append(times,New(Add(tDate, Minutes(i)),Minute))
+		times = append(times, NewRange(Add(tDate, Minutes(i)),Minute))
 	}
 
 	valueCompare(
 		t,
 		times,
-		Split(New(tDate, 2*Hour),Minute))
+		Split(NewRange(tDate, 2*Hour),Minute))
 
 }
 
@@ -73,13 +73,13 @@ func TestSplitHour(t *testing.T) {
 	var times = make([]TimeRange,0)
 
 	for i:=0;i<48;i++ {
-		times = append(times,New(Add(tDate, Hours(i)),Hour))
+		times = append(times, NewRange(Add(tDate, Hours(i)),Hour))
 	}
 
 	valueCompare(
 		t,
 		times,
-		Split(New(tDate, 2*Day),Hour))
+		Split(NewRange(tDate, 2*Day),Hour))
 
 }
 
@@ -92,14 +92,14 @@ func TestSplitMonth(t *testing.T) {
 	var times = make([]TimeRange,0)
 
 	for i:=0;i<120;i++ {
-		times = append(times,At(begin,begin.AddDate(0,1,0)))
+		times = append(times, NewRangeAt(begin,begin.AddDate(0,1,0)))
 		begin = begin.AddDate(0,1,0)
 	}
 
 	valueCompare(
 		t,
 		times,
-		Split(New(base, 10*Year),Month))
+		Split(NewRange(base, 10*Year),Month))
 
 }
 
@@ -111,14 +111,14 @@ func TestSplitYear(t *testing.T) {
 	var times = make([]TimeRange,0)
 
 	for i:=0;i<100;i++{
-		times = append(times,At(begin,begin.AddDate(1,0,0)))
+		times = append(times, NewRangeAt(begin,begin.AddDate(1,0,0)))
 		begin = begin.AddDate(1,0,0)
 	}
 
 	valueCompare(
 		t,
 		times,
-		Split(New(base, 100*Year),Year))
+		Split(NewRange(base, 100*Year),Year))
 
 }
 
@@ -132,7 +132,7 @@ func TestSplitYearRevert(t *testing.T) {
 	var times = make([]TimeRange,0)
 
 	for i:=0;i<100;i++{
-		times = append(times,At(begin,begin.AddDate(1,0,0)))
+		times = append(times, NewRangeAt(begin,begin.AddDate(1,0,0)))
 		begin = begin.AddDate(1,0,0)
 	}
 
@@ -143,7 +143,7 @@ func TestSplitYearRevert(t *testing.T) {
 	valueCompare(
 		t,
 		times,
-		Split(New(base, 100*Year),-1*Year))
+		Split(NewRange(base, 100*Year),-1*Year))
 
 }
 
@@ -155,7 +155,7 @@ func TestSplitMonthRevert(t *testing.T) {
 	var times = make([]TimeRange,0)
 
 	for i:=0;i<120;i++ {
-		times = append(times,At(begin,begin.AddDate(0,1,0)))
+		times = append(times, NewRangeAt(begin,begin.AddDate(0,1,0)))
 		begin = begin.AddDate(0,1,0)
 	}
 
@@ -166,7 +166,7 @@ func TestSplitMonthRevert(t *testing.T) {
 	valueCompare(
 		t,
 		times,
-		Split(New(base, 10*Year),-1*Month))
+		Split(NewRange(base, 10*Year),-1*Month))
 
 }
 
@@ -175,7 +175,7 @@ func TestSplitHourRevert(t *testing.T) {
 	var times = make([]TimeRange,0)
 
 	for i:=0;i<48;i++ {
-		times = append(times,New(Add(tDate, Hours(i)),Hour))
+		times = append(times, NewRange(Add(tDate, Hours(i)),Hour))
 	}
 
 	sort.Slice(times, func(i, j int) bool {
@@ -185,7 +185,7 @@ func TestSplitHourRevert(t *testing.T) {
 	valueCompare(
 		t,
 		times,
-		Split(New(tDate, 2*Day),-1*Hour))
+		Split(NewRange(tDate, 2*Day),-1*Hour))
 
 }
 
@@ -194,7 +194,7 @@ func TestSplitMinuteRevert(t *testing.T) {
 	var times = make([]TimeRange,0)
 
 	for i:=0;i<120;i++ {
-		times = append(times,New(Add(tDate, Minutes(i)),Minute))
+		times = append(times, NewRange(Add(tDate, Minutes(i)),Minute))
 	}
 
 	sort.Slice(times, func(i, j int) bool {
@@ -204,7 +204,7 @@ func TestSplitMinuteRevert(t *testing.T) {
 	valueCompare(
 		t,
 		times,
-		Split(New(tDate, 2*Hour),-1*Minute))
+		Split(NewRange(tDate, 2*Hour),-1*Minute))
 
 }
 
@@ -213,7 +213,7 @@ func TestSplitSecondsRevert(t *testing.T) {
 	var times = make([]TimeRange,0)
 
 	for i:=time.Duration(0);i<120;i++ {
-		times = append(times,New(tDate.Add(i*time.Second),Second))
+		times = append(times, NewRange(tDate.Add(i*time.Second),Second))
 	}
 
 	sort.Slice(times, func(i, j int) bool {
@@ -223,7 +223,7 @@ func TestSplitSecondsRevert(t *testing.T) {
 	valueCompare(
 		t,
 		times,
-		Split(New(tDate, 2*Minute),-1*Second))
+		Split(NewRange(tDate, 2*Minute),-1*Second))
 
 }
 
