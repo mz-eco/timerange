@@ -17,6 +17,10 @@ func (m week) Current(o time.Time) time.Time {
 
 }
 
+func Weeks(size int) week {
+	return week(size)
+}
+
 func (m week) Next(o time.Time) time.Time {
 	return m.Current(o).AddDate(0, 0, 7)
 }

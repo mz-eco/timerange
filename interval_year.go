@@ -8,6 +8,10 @@ func (m year) Date(year int) time.Time{
 	return date(year,time.January,1)
 }
 
+func Years(size int) year {
+	return year(size)
+}
+
 func (m year) Next(o time.Time) time.Time {
 	var (
 		y, _, _ = o.Date()

@@ -42,7 +42,7 @@ func (m *Fixed) GetSize() (days int, duration time.Duration) {
 }
 
 func (m *Fixed) String() string {
-	return fmt.Sprintf("[%d days %s)", m.days, m.duration)
+	return fmt.Sprintf("[%d day %s)", m.days, m.duration)
 }
 
 func NewInterval(intervals ...FixedInterval) *Fixed {

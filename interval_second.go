@@ -16,6 +16,10 @@ func (m second) Date(year int, month time.Month, day int, hour int, minute int,s
 		time.Local)
 }
 
+func Seconds(size int) second {
+	return second(size)
+}
+
 func (m second) GetValue() time.Duration {
 	return time.Duration(m)
 }

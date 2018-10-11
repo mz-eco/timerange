@@ -208,7 +208,6 @@ func At(b, e time.Time) TimeRange {
 	}
 }
 
-
 func New(b time.Time, iv Interval) TimeRange {
 	return At(
 		b,

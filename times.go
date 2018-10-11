@@ -8,7 +8,7 @@ import (
 const (
 	Second second = 1
 	Minute minute = 1
-	Hour   hour= 1
+	Hour   hour   = 1
 	Day    day    = 1
 	Month  month  = 1
 	Year   year   = 1

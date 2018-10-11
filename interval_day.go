@@ -9,6 +9,11 @@ func (m day) Date(year int, month time.Month, day int) time.Time {
 	return date(year,month,day)
 }
 
+func Days(size int) day {
+	return day(size)
+}
+
+
 func (m day) Preview(o time.Time) time.Time {
 
 	var (

@@ -28,6 +28,11 @@ type Iterator struct {
 	Current Block
 	iv      Interval
 	a       Allow
+	i int
+}
+
+func (m *Iterator) Index() int {
+	return m.i
 }
 
 func NewIterator(p TimeRange, iv Interval) *Iterator {
@@ -57,7 +62,7 @@ func (m *Iterator) Next() bool {
 	switch m.a {
 	case AllowForward:
 
-		if !m.c.Before(m.p.e) {
+		if m.c.After(m.p.e) || m.c.Equal(m.p.e) {
 			return false
 		}
 
@@ -70,11 +75,12 @@ func (m *Iterator) Next() bool {
 		}
 
 		m.c = next
+		m.i ++
 
 		return true
 	case AllowRevert:
 
-		if !m.c.After(m.p.b) {
+		if m.c.Before(m.p.b) || m.c.Equal(m.p.b) {
 			return false
 		}
 
@@ -86,6 +92,8 @@ func (m *Iterator) Next() bool {
 			m.Current = NewBlock(next, m.c)
 		}
 
+		m.c = next
+		m.i++
 		return true
 	default:
 		return false
