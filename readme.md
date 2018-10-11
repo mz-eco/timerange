@@ -7,9 +7,7 @@ go get -u github.com/mz-eco/timerange
 ```
 ## Usage
 ```go
-now, _ := time.Parse(
-    time.RFC3339Nano,
-    "2018-10-11T15:46:28.132318+08:00")
+now, _ := time.Parse(time.RFC3339Nano,"2018-10-11T15:46:28.132318+08:00")
 ```
 
 创建区间
