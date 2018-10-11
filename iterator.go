@@ -1,6 +1,7 @@
 package timerange
 
 import (
+	"strings"
 	"time"
 )
 
@@ -12,6 +13,20 @@ type Block struct {
 
 func (m Block) String() string {
 	return m.P.String()
+}
+
+type Blocks []Block
+
+func (m Blocks) String() string{
+
+	var (
+		ss = make([]string,0)
+	)
+	for _, block := range m {
+		ss = append(ss,block.String())
+	}
+
+	return strings.Join(ss,"\n")
 }
 
 func NewBlock(b, e time.Time) Block {

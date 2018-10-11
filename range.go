@@ -5,7 +5,6 @@ import (
 	"time"
 )
 
-
 type TimeRange struct {
 	b time.Time
 	e time.Time
@@ -35,8 +34,12 @@ func (m TimeRange) Begin() time.Time {
 	return m.b
 }
 
+func (m TimeRange) Split(iv Interval) Blocks {
+	return Split(m, iv)
+}
+
 func (m TimeRange) End() time.Time {
-	return m.e.Add(-1*time.Nanosecond)
+	return m.e.Add(-1 * time.Nanosecond)
 }
 
 func (m TimeRange) Head(iv Whole) (head, body TimeRange) {
@@ -124,11 +127,52 @@ func (m TimeRange) Format(format string) string {
 		m.e.Format(format))
 }
 
-func (m TimeRange) Add(interval Interval) TimeRange {
+func (m TimeRange) Move(interval Interval) TimeRange {
 
 	return TimeRange{
 		b: interval.AddTo(m.b),
 		e: interval.AddTo(m.e),
+	}
+}
+
+func (m TimeRange) Add(ivs Interval) TimeRange {
+
+	switch ivs.Allow() {
+	case AllowForward:
+		return Range(m.b, Add(m.e, ivs))
+	case AllowRevert:
+		return Range(Add(m.b, ivs), m.e)
+	default:
+		return m
+	}
+}
+
+func (m TimeRange) Sub(ivs Interval) TimeRange {
+
+	switch ivs.Allow() {
+	case AllowForward:
+		var (
+			next = Add(m.b, ivs)
+		)
+
+		if next.After(m.e) {
+			return Range(m.e, m.e)
+		}
+
+		return Range(next, m.e)
+
+	case AllowRevert:
+		var (
+			next = Add(m.e, ivs)
+		)
+
+		if next.Before(m.b) {
+			return Range(m.b, m.b)
+		}
+
+		return Range(m.b, next)
+	default:
+		return m
 	}
 }
 
@@ -162,7 +206,12 @@ func (m TimeRange) Larger(o TimeRange) bool {
 		od, ot = o.Size()
 	)
 
-	return md >= od && mt > ot
+	switch {
+	case md == od:
+		return mt > ot
+	default:
+		return md > od
+	}
 }
 
 func (m TimeRange) Smaller(o TimeRange) bool {
@@ -172,7 +221,12 @@ func (m TimeRange) Smaller(o TimeRange) bool {
 		od, ot = o.Size()
 	)
 
-	return md <= od && mt < ot
+	switch {
+	case md == od:
+		return mt < ot
+	default:
+		return md < od
+	}
 }
 
 func (m TimeRange) In(o TimeRange) bool {
@@ -233,7 +287,7 @@ func RangeAt(now time.Time, w Whole) TimeRange {
 	return Range(
 		w.Current(now),
 		w.Next(now),
-		)
+	)
 }
 
 func RangeTo(b time.Time, iv Interval) TimeRange {
@@ -241,9 +295,6 @@ func RangeTo(b time.Time, iv Interval) TimeRange {
 		b,
 		iv.AddTo(b))
 }
-
-
-
 
 func NowTo(iv Interval) TimeRange {
 
@@ -256,16 +307,15 @@ func NowTo(iv Interval) TimeRange {
 	)
 }
 
-
-func Split(p TimeRange, iv Interval) []Block {
+func Split(p TimeRange, iv Interval) Blocks {
 
 	var (
-		blocks = make([]Block,0)
-		iter = NewIterator(p,iv)
+		blocks   = make(Blocks, 0)
+		iterator = NewIterator(p, iv)
 	)
 
-	for iter.Next() {
-		blocks = append(blocks, iter.Current)
+	for iterator.Next() {
+		blocks = append(blocks, iterator.Current)
 	}
 
 	return blocks

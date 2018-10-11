@@ -72,6 +72,11 @@ type Whole interface {
 	IsWhole(now time.Time) bool
 }
 
+type WholeInterval interface {
+	Whole
+	Interval
+}
+
 
 
 type durationUnitWhole interface {
