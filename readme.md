@@ -2,7 +2,9 @@
 描述一个 [begin,end) 的开闭型时间区间、提供对时间区间的操作函数
 
 ## Install
-
+```shell
+go get -u github.com/mz-eco/timerange
+```
 ## Usage
 ```go
 now, _ := time.Parse(
