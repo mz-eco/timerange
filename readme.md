@@ -84,3 +84,90 @@ for i.Next() {
     fmt.Println(i.Current)
 }
 ```
+
+## API
+### Interval
+#### 时间点在时间轴上位移步长的抽象描述
+
+- ```+``` 表示往 --> 方向移动
+- ```-``` 表示往 <-- 方向移动
+
+#### construct
+```go
+//+3 days
+3*Day
+Days(3)
+
+//-3 hours
+-3*Hour
+Hours(-3)
+
+//+10 seconds
+Duration(10*time.Second)
+```
+
+#### builtin
+
+| Name     |construct|value        |
+|----------|-----    |:-------------|
+| Second   |Seconds(int)|now.AddDuration(n*time.Second) |
+| Minute   |Minutes(int)| now.AddDuration(n*time.Minute) |
+| Hour     |Hours(int)| now.AddDuration(n*time.Hour)  |
+| Day      |Days(int)| now.AddDate(0,0,n)  |
+| Month    |Month(int)| now.AddDate(0,n,0)  |
+| Year     |Year(int) |now.AddDate(n,0,0)  |
+| Week     |Week(int)| to next week's monday|
+
+#### type
+| Name     |value       |
+|----------|:-------------|
+| Duration   | now.AddDuration(n) |
+
+### functions
+#### Add
+```go
+Add(now time.Time, ivs Interval) time.Time
+```
+shift ```now``` via given ```Interval``` on time axis
+
+
+### Whole Point
+#### 取时间点的整点时间
+#### usage
+```go
+now = time.Now()  //2018-10-12 10:58:43.964305 +0800 CST m=+0.000684927
+Truncate(now,Day) //2018-10-12 00:00:00 +0800 CST
+Next(now,Hour)    //2018-10-13 00:00:00 +0800 CST
+```
+#### Functions
+#### Truncate
+```go
+func Truncate(now time.Time, w Whole) time.Time
+```
+将时间点移动到当前个整点
+```
+12:00       12:01       12:02       12:03
+  +-----------+-----------+-----------+
+              ^ <-- *
+```
+##### Next
+```go
+func Next(now time.Time, w Whole) time.Time
+```
+将时间点移动到下一个整点
+```
+12:00       12:01       12:02       12:03
+  +-----------+-----------+-----------+
+                    * --> ^
+```
+#### Preview
+```go
+func Preview(now time.Time, w Whole) time.Time
+```
+将时间点移动到上一个整点
+```
+12:00       12:01       12:02       12:03
+  +-----------+-----------+-----------+
+  ^      <--        *
+```
+
