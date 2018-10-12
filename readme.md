@@ -145,3 +145,38 @@ End(now,Day)      //2018-10-12 23:59:59.999999999 +0800 CST
 | Month    |[2018-01-01,2018-02-01)|
 | Year     |[2018-01-01,2019-01-01)|
 | Week     |[Monday,Monday+7Days)|
+
+### TimeRange
+time range is a interval on time axis
+
+it is a open,close interval like [begin,end)
+```
+  12:00                   14:00
+ ---+---------+------------+---
+    ^                      ^
+  begin                   end
+```
+#### construct
+##### Range
+```go
+func Range(b, e time.Time) TimeRange
+```
+create a time range by given time
+##### RangeAt
+```go
+func RangeAt(now time.Time, w WholeInterval) TimeRange
+```
+create a time range from whole time point of ```now``` to given interval
+```go
+//[2018-10-12T00:00:00+08:00 - 2018-10-14T00:00:00+08:00)
+days := RangeAt(time.Now(), 2*Day)
+```
+##### RangeTo
+```go
+func RangeTo(b time.Time, iv Interval) TimeRange
+```
+create a time range from begin time to given interval
+```go
+//[2018-10-12T13:57:07.665073+08:00 - 2018-10-14T13:57:07.665073+08:00)
+RangeTo(time.Now(), 2*Day)
+```
