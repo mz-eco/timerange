@@ -19,8 +19,6 @@ func main() {
 
 	days := RangeAt(time.Now(), 2*Day) //[2018-10-12T00:00:00+08:00 - 2018-10-14T00:00:00+08:00)
 
-	fmt.Println(days)
-
 	for _,block := range days.Split(12*Hour) {
 		fmt.Println(block)
 	}
