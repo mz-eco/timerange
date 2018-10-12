@@ -18,18 +18,6 @@ func (m TimeRange) Truncate(iv Whole) (head, tail, body TimeRange) {
 	return
 }
 
-func (m TimeRange) Day() TimeRange {
-	return Day.At(m.b)
-}
-
-func (m TimeRange) Month() TimeRange {
-	return Month.At(m.b)
-}
-
-func (m TimeRange) Year() TimeRange {
-	return Year.At(m.b)
-}
-
 func (m TimeRange) Begin() time.Time {
 	return m.b
 }
@@ -75,6 +63,7 @@ func (m TimeRange) Tail(iv Whole) (tail, body TimeRange) {
 func (m TimeRange) Trim(iv Whole) TimeRange {
 	return m.TrimLeft(iv).TrimRight(iv)
 }
+
 
 func (m TimeRange) TrimRight(iv Whole) TimeRange {
 
@@ -304,17 +293,8 @@ func RangeTo(b time.Time, iv Interval) TimeRange {
 		iv.AddTo(b))
 }
 
-func NowTo(iv Interval) TimeRange {
 
-	var (
-		now = time.Now()
-	)
-	return Range(
-		now,
-		iv.AddTo(now),
-	)
-}
-
+//split time range via interval, see also Iterator
 func Split(p TimeRange, iv Interval) Blocks {
 
 	var (

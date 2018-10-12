@@ -204,7 +204,7 @@ function return a iterator
                                   <--  *
                                      begin
     ```
-#### Usage
+##### Usage
 ```go
 package main
 
@@ -230,4 +230,17 @@ output
 [2018-10-12T12:00:00+08:00 - 2018-10-13T00:00:00+08:00)
 [2018-10-13T00:00:00+08:00 - 2018-10-13T12:00:00+08:00)
 [2018-10-13T12:00:00+08:00 - 2018-10-14T00:00:00+08:00)
+```
+
+#### Methods
+##### Head
+```go
+func (m TimeRange) Head(iv Whole) (head, body TimeRange)
+```
+split time range by ```whole```
+```
+12:45:03      12:46:00                12:47:00     12:47:15
+  +-------------+-----------------------+------------+
+  |<-  head   ->|<-              body              =>|
+begin      whole point                              end
 ```
