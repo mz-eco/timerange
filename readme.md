@@ -106,7 +106,7 @@ Hours(-3)
 Duration(10*time.Second)
 ```
 
-#### builtin
+#### builtin intervals
 
 | Name     |construct|value        |
 |----------|-----    |:-------------|
@@ -140,11 +140,11 @@ Truncate(now,Day) //2018-10-12 00:00:00 +0800 CST
 Next(now,Hour)    //2018-10-13 00:00:00 +0800 CST
 ```
 #### Functions
-#### Truncate
+##### Truncate
 ```go
 func Truncate(now time.Time, w Whole) time.Time
 ```
-将时间点移动到当前个整点
+取当前整点
 ```
 12:00       12:01       12:02       12:03
   +-----------+-----------+-----------+
@@ -154,20 +154,47 @@ func Truncate(now time.Time, w Whole) time.Time
 ```go
 func Next(now time.Time, w Whole) time.Time
 ```
-将时间点移动到下一个整点
+取上一个整点
 ```
 12:00       12:01       12:02       12:03
   +-----------+-----------+-----------+
                     * --> ^
 ```
-#### Preview
+##### Preview
 ```go
 func Preview(now time.Time, w Whole) time.Time
 ```
-将时间点移动到上一个整点
+取下一个整点
 ```
 12:00       12:01       12:02       12:03
   +-----------+-----------+-----------+
   ^      <--        *
 ```
-
+##### Begin
+```go
+func Begin(now time.Time, w Whole) time.Time
+```
+整点的开始时间
+```go
+now = time.Now()  //2018-10-12 10:58:43.964305 +0800 CST m=+0.000684927
+Begin（now,Day)   //2018-10-12 00:00:00 +0800 CST
+```
+##### End
+```go
+func End(now time.Time, w Whole) time.Time
+```
+整点的结束时间
+```go
+now = time.Now()  //2018-10-12 10:58:43.964305 +0800 CST m=+0.000684927
+End(now,Day)      //2018-10-12 23:59:59.999999999 +0800 CST
+```
+#### built in wholes
+| Name     |range|
+|----------|-----    |
+| Second   |[00:00:01,00:00:02)|
+| Minute   |[00:00:00,00:01:00)|
+| Hour     |[00:00:00,01:00:00)|
+| Day      |[2018-01-01,2018-01-02)|
+| Month    |[2018-01-01,2018-02-01)|
+| Year     |[2018-01-01,2019-01-01)|
+| Week     |[Monday,Monday+7Days)|
