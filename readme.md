@@ -266,3 +266,39 @@ split both head and tail by ```whole```
   |<-  head   ->|<-       body        ->|<-  tail  ->|
 begin      whole point                              end
 ```
+##### TrimLeft
+```go
+func (m TimeRange) TrimLeft(iv Whole) TimeRange
+```
+trim time range left side by ```whole``` return a new range
+```
+12:45:03      12:46:00                12:47:00     12:47:15
+  +-------------+-----------------------+------------+
+  |<-    X    ->|<-          new range             ->|
+  ^             ^                                    ^
+begin      whole point
+```
+##### TrimRight
+```go
+func (m TimeRange) TrimRight(iv Whole) TimeRange
+```
+trim time range right side by ```whole``` return a new range
+```
+12:45:03      12:46:00                12:47:00     12:47:15
+  +-------------+-----------------------+------------+
+  |<-        new range                ->|<-    X   ->|
+  ^             ^                                    ^
+begin      whole point                              end
+```
+##### Trim
+```go
+func (m TimeRange) Trim(iv Whole) TimeRange
+```
+trim time range by ```whole``` return a new range
+```
+12:45:03      12:46:00                12:47:00     12:47:15
+  +-------------+-----------------------+------------+
+  |<-    X    ->|<-     new range     ->|<-    X   ->|
+  ^             ^                       ^            ^
+begin      whole point              whole point     end
+```
