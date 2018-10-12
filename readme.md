@@ -36,8 +36,8 @@ output
 ### Interval
 #### 时间点在时间轴上位移步长的抽象描述
 
-- ```+``` 表示往 --> 方向移动
-- ```-``` 表示往 <-- 方向移动
+- ```+``` means move time point forward(-->) on time axis
+- ```-``` means move time point revert (<--) on time axis
 
 #### construct
 ```go
@@ -91,7 +91,7 @@ Next(now,Hour)    //2018-10-13 00:00:00 +0800 CST
 ```go
 func Truncate(now time.Time, w Whole) time.Time
 ```
-取当前整点
+current whole time point via ```whole```
 ```
 12:00       12:01       12:02       12:03
   +-----------+-----------+-----------+
@@ -101,7 +101,7 @@ func Truncate(now time.Time, w Whole) time.Time
 ```go
 func Next(now time.Time, w Whole) time.Time
 ```
-取上一个整点
+next whole time point  via ```whole```
 ```
 12:00       12:01       12:02       12:03
   +-----------+-----------+-----------+
@@ -111,7 +111,7 @@ func Next(now time.Time, w Whole) time.Time
 ```go
 func Preview(now time.Time, w Whole) time.Time
 ```
-取下一个整点
+preview whole time point  via ```whole```
 ```
 12:00       12:01       12:02       12:03
   +-----------+-----------+-----------+
@@ -179,4 +179,55 @@ create a time range from begin time to given interval
 ```go
 //[2018-10-12T13:57:07.665073+08:00 - 2018-10-14T13:57:07.665073+08:00)
 RangeTo(time.Now(), 2*Day)
+```
+#### Iterator
+```go
+func NewIterator(p TimeRange, iv Interval) *Iterator
+```
+iterator time range ```p``` via given ```interval```
+
+function return a iterator
+
+- when ```Interval``` is a forward interval, it move like
+
+    ```
+    12:00                            14:00
+      +---------+------------+---------+
+      *  -->
+    begin
+    ```
+- when ```Interval``` is a revert interval, it move like
+
+    ```
+    12:00                            14:00
+      +---------+------------+---------+
+                                  <--  *
+                                     begin
+    ```
+#### Usage
+```go
+package main
+
+import (
+	"fmt"
+	. "github.com/mz-eco/timerange"
+	"time"
+)
+
+func main() {
+
+	days := RangeAt(time.Now(), 2*Day) //[2018-10-12T00:00:00+08:00 - 2018-10-14T00:00:00+08:00)
+
+	i := NewIterator(days, 12*Hour)
+	for i.Next() {
+		fmt.Println(i.Current)
+	}
+}
+```
+output
+```
+[2018-10-12T00:00:00+08:00 - 2018-10-12T12:00:00+08:00)
+[2018-10-12T12:00:00+08:00 - 2018-10-13T00:00:00+08:00)
+[2018-10-13T00:00:00+08:00 - 2018-10-13T12:00:00+08:00)
+[2018-10-13T12:00:00+08:00 - 2018-10-14T00:00:00+08:00)
 ```
