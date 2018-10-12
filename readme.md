@@ -179,4 +179,8 @@ create a time range from begin time to given interval
 ```go
 //[2018-10-12T13:57:07.665073+08:00 - 2018-10-14T13:57:07.665073+08:00)
 RangeTo(time.Now(), 2*Day)
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> 1f21ac151c0783fe1a558cdad0c8dfe46a3f5bcd
