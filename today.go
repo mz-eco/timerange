@@ -5,16 +5,16 @@ import "time"
 type today int
 
 
-func (m today) Day() TimeRange {
-	return now(Day)
+func (m today) Day() time.Time {
+	return Truncate(time.Now(),Day)
 }
 
-func (m today) Month() TimeRange {
-	return now(Month)
+func (m today) Month() time.Time {
+	return Truncate(time.Now(),Month)
 }
 
-func (m today) Year() TimeRange {
-	return now(Year)
+func (m today) Year() time.Time {
+	return Truncate(time.Now(),Year)
 }
 
 func (m today) Begin() time.Time {

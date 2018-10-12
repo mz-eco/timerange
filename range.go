@@ -214,6 +214,10 @@ func (m TimeRange) Larger(o TimeRange) bool {
 	}
 }
 
+func (m TimeRange) Iterator(iv Interval) *Iterator {
+	return NewIterator(m, iv)
+}
+
 func (m TimeRange) Smaller(o TimeRange) bool {
 
 	var (
@@ -282,11 +286,15 @@ func Range(b, e time.Time) TimeRange {
 	}
 }
 
-func RangeAt(now time.Time, w Whole) TimeRange {
+func RangeAt(now time.Time, w WholeInterval) TimeRange {
 
+	var (
+		b = w.Current(now)
+		e = w.AddTo(b)
+	)
 	return Range(
-		w.Current(now),
-		w.Next(now),
+		b,
+		e,
 	)
 }
 
