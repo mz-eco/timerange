@@ -237,10 +237,32 @@ output
 ```go
 func (m TimeRange) Head(iv Whole) (head, body TimeRange)
 ```
-split time range by ```whole```
+split time range head by ```whole```
 ```
 12:45:03      12:46:00                12:47:00     12:47:15
   +-------------+-----------------------+------------+
-  |<-  head   ->|<-              body              =>|
+  |<-  head   ->|<-              body              ->|
+begin      whole point                              end
+```
+##### Tail
+```go
+func (m TimeRange) Tail(iv Whole) (tail, body TimeRange)
+```
+split time range tail by ```whole```
+```
+12:45:03      12:46:00                12:47:00     12:47:15
+  +-------------+-----------------------+------------+
+  |<-              body               ->|<-  tail  ->|
+begin      whole point                              end
+```
+##### Truncate
+```go
+func (m TimeRange) Truncate(iv Whole) (head, tail, body TimeRange)
+```
+split both head and tail by ```whole```
+```
+12:45:03      12:46:00                12:47:00     12:47:15
+  +-------------+-----------------------+------------+
+  |<-  head   ->|<-       body        ->|<-  tail  ->|
 begin      whole point                              end
 ```
