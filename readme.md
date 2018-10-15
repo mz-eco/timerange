@@ -302,3 +302,50 @@ trim time range by ```whole``` return a new range
   ^             ^                       ^            ^
 begin      whole point              whole point     end
 ```
+##### Contains
+```go
+func (m TimeRange) Contains(time time.Time) bool
+```
+is time point in time range
+##### Move
+```go
+func (m TimeRange) Move(interval Interval) TimeRange
+```
+move time range on time axis via ```interval```
+- when ```Interval``` is a forward interval, it moves right
+- when ```Interval``` is a revert interval, it moves left
+##### Add
+```go
+func (m TimeRange) Add(ivs Interval) TimeRange
+```
+expand time range via given ```Interval```
+- when ```Interval``` is a forward, move ```TimeRange.begin```
+- when ```Interval``` is a revert, it move ```TimeRange.end```
+##### Sub
+```go
+func (m TimeRange) Sub(ivs Interval) TimeRange
+```
+reduce time range via given ```Interval```
+- when ```Interval``` is a forward, move ```TimeRange.end```
+- when ```Interval``` is a revert, it move ```TimeRange.begin```
+##### Duration
+```go
+func (m TimeRange) Duration() time.Duration
+```
+get duration from begin to end
+if duration > maxDuration, use ```Size()```
+##### Size
+```go
+(m TimeRange) Size() (days int, duration time.Duration)
+```
+returns days and duration from begin to end, duration always < 24 hours
+##### Larger
+```go
+func (m TimeRange) Larger(o TimeRange) bool
+```
+time range Size() > o.Size()
+##### Smaller
+```go
+func (m TimeRange) Smaller(o TimeRange) bool
+```
+time range Size() < o.Size()
