@@ -333,7 +333,8 @@ reduce time range via given ```Interval```
 func (m TimeRange) Duration() time.Duration
 ```
 get duration from begin to end
-if duration > maxDuration, use ```Size()```
+
+```note*``` if duration > maxDuration, use ```Size()```
 ##### Size
 ```go
 (m TimeRange) Size() (days int, duration time.Duration)
@@ -349,3 +350,55 @@ time range Size() > o.Size()
 func (m TimeRange) Smaller(o TimeRange) bool
 ```
 time range Size() < o.Size()
+##### In
+```go
+func (m TimeRange) In(o TimeRange) bool
+```
+```o``` time range in ```m``` time range
+```
+false: *-------*
+true :    *---------*
+false:*----------------------*
+false:               *---------*
++-------+---------------+--------+
+        |<-           ->|
+        ^               ^
+      begin            end
+```
+##### Time
+```go
+func (m TimeRange) Time() (b, e time.Time)
+```
+return [begin,end)
+##### Before
+```go
+func (m TimeRange) Before(time time.Time) bool
+```
+is time before time range
+```
++-----*----+---------------+--------+
+|<- true ->|         false        ->|
+           ^               ^
+         begin            end
+```
+##### After
+```go
+func (m TimeRange) After(time time.Time) bool
+```
+is time after time range
+```
++------+---------------+-------*-----+
+|<-      false       ->|<-   true  ->|
+       ^               ^
+     begin            end
+```
+##### Equal
+```go
+func (m TimeRange) Equal(other TimeRange) bool
+```
+[begin,end) is equal [begin,end)
+##### IsZero
+```go
+func (m TimeRange) IsZero() bool
+```
+begin == end ?
