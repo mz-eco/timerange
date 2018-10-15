@@ -402,3 +402,26 @@ func (m TimeRange) Equal(other TimeRange) bool
 func (m TimeRange) IsZero() bool
 ```
 begin == end ?
+##### Split
+```go
+func (m TimeRange) Split(iv Interval) Blocks
+```
+split time range via ```Interval```
+```go
+package main
+
+import (
+	"fmt"
+	. "github.com/mz-eco/timerange"
+	"time"
+)
+
+func main() {
+
+	days := RangeAt(time.Now(), 2*Day)
+
+	for _, block := range days.Split(12*Hour) {
+		fmt.Println(block)
+	}
+}
+```
