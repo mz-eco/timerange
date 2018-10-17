@@ -4,7 +4,7 @@ import "time"
 
 type second time.Duration
 
-func (m second) Date(year int, month time.Month, day int, hour int, minute int,second int) time.Time {
+func (m second) Date(year int, month time.Month, day int, hour int, minute int, second int) time.Time {
 	return time.Date(
 		year,
 		month,
@@ -22,21 +22,20 @@ func Seconds(size int) Interval {
 
 func (m second) To(b time.Time, size int) TimeRange {
 	return RangeTo(
-		Truncate(b,m),
+		Truncate(b, m),
 		second(size))
 }
 
 func (m second) At(now time.Time) TimeRange {
-	return RangeAt(now,m)
+	return RangeAt(now, m)
 }
 
-func (m second) Range(b,e time.Time) TimeRange {
+func (m second) Range(b, e time.Time) TimeRange {
 	return Range(
-		Truncate(b,m),
-		Truncate(e,m),
+		Truncate(b, m),
+		Truncate(e, m),
 	)
 }
-
 
 func (m second) GetValue() time.Duration {
 	return time.Duration(m)
@@ -55,7 +54,7 @@ func (m second) Current(o time.Time) time.Time {
 }
 
 func (m second) Preview(o time.Time) time.Time {
-	return preview(o,m)
+	return preview(o, m)
 }
 
 func (m second) IsWhole(now time.Time) bool {

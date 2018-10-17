@@ -5,7 +5,7 @@ import "time"
 type month int
 
 func (m month) Date(year int, month time.Month) time.Time {
-	return date(year,month,1)
+	return date(year, month, 1)
 }
 
 func Months(size int) Interval {
@@ -14,21 +14,20 @@ func Months(size int) Interval {
 
 func (m month) To(b time.Time, size int) TimeRange {
 	return RangeTo(
-		Truncate(b,m),
+		Truncate(b, m),
 		month(size))
 }
 
 func (m month) At(now time.Time) TimeRange {
-	return RangeAt(now,m)
+	return RangeAt(now, m)
 }
 
-func (m month) Range(b,e time.Time) TimeRange {
+func (m month) Range(b, e time.Time) TimeRange {
 	return Range(
-		Truncate(b,m),
-		Truncate(e,m),
+		Truncate(b, m),
+		Truncate(e, m),
 	)
 }
-
 
 func (m month) Next(o time.Time) time.Time {
 	var (

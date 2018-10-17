@@ -4,8 +4,8 @@ import "time"
 
 type year int
 
-func (m year) Date(year int) time.Time{
-	return date(year,time.January,1)
+func (m year) Date(year int) time.Time {
+	return date(year, time.January, 1)
 }
 
 func Years(size int) Interval {
@@ -18,18 +18,18 @@ func (m year) Now() TimeRange {
 
 func (m year) To(b time.Time, size int) TimeRange {
 	return RangeTo(
-		Truncate(b,m),
+		Truncate(b, m),
 		year(size))
 }
 
 func (m year) At(now time.Time) TimeRange {
-	return RangeAt(now,m)
+	return RangeAt(now, m)
 }
 
-func (m year) Range(b,e time.Time) TimeRange {
+func (m year) Range(b, e time.Time) TimeRange {
 	return Range(
-		Truncate(b,m),
-		Truncate(e,m),
+		Truncate(b, m),
+		Truncate(e, m),
 	)
 }
 

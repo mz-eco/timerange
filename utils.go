@@ -13,7 +13,7 @@ func next(o time.Time, d durationUnitWhole) time.Time {
 }
 
 func preview(o time.Time, d durationUnitWhole) time.Time {
-	return current(o,d).Add(-1*d.GetUnit())
+	return current(o, d).Add(-1 * d.GetUnit())
 }
 
 func date(y int, m time.Month, d int) time.Time {

@@ -4,7 +4,6 @@ import (
 	"time"
 )
 
-
 const (
 	Second second = 1
 	Minute minute = 1
@@ -28,7 +27,6 @@ func Preview(now time.Time, w Whole) time.Time {
 	return w.Preview(now)
 }
 
-
 func Next(now time.Time, w Whole) time.Time {
 	return w.Next(now)
 }
@@ -38,12 +36,9 @@ func Truncate(now time.Time, w Whole) time.Time {
 }
 
 func Begin(now time.Time, w Whole) time.Time {
-	return Truncate(now,w)
+	return Truncate(now, w)
 }
 
 func End(now time.Time, w Whole) time.Time {
-	return Next(now,w).Add(-1*time.Nanosecond)
+	return Next(now, w).Add(-1 * time.Nanosecond)
 }
-
-
-

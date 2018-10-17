@@ -61,7 +61,6 @@ type Whole interface {
 	//              ^ <-- *
 	Current(now time.Time) time.Time
 
-
 	//将时间点移动到上一个整点
 	//12:00       12:01       12:02       12:03
 	//  +-----------+-----------+-----------+
@@ -76,8 +75,6 @@ type WholeInterval interface {
 	Whole
 	Interval
 }
-
-
 
 type durationUnitWhole interface {
 	GetUnit() time.Duration

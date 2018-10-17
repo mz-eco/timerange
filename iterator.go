@@ -17,16 +17,16 @@ func (m Block) String() string {
 
 type Blocks []Block
 
-func (m Blocks) String() string{
+func (m Blocks) String() string {
 
 	var (
-		ss = make([]string,0)
+		ss = make([]string, 0)
 	)
 	for _, block := range m {
-		ss = append(ss,block.String())
+		ss = append(ss, block.String())
 	}
 
-	return strings.Join(ss,"\n")
+	return strings.Join(ss, "\n")
 }
 
 func NewBlock(b, e time.Time) Block {
@@ -43,7 +43,7 @@ type Iterator struct {
 	Current Block
 	iv      Interval
 	a       Allow
-	i int
+	i       int
 }
 
 func (m *Iterator) Index() int {
@@ -90,7 +90,7 @@ func (m *Iterator) Next() bool {
 		}
 
 		m.c = next
-		m.i ++
+		m.i++
 
 		return true
 	case AllowRevert:

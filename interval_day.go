@@ -4,9 +4,8 @@ import "time"
 
 type day int
 
-
 func (m day) Date(year int, month time.Month, day int) time.Time {
-	return date(year,month,day)
+	return date(year, month, day)
 }
 
 func (m day) Now() TimeRange {
@@ -19,19 +18,19 @@ func (m day) Today() TimeRange {
 
 func (m day) To(b time.Time, size int) TimeRange {
 	return RangeTo(
-		Truncate(b,m),
+		Truncate(b, m),
 		day(size))
 }
 
 func (m day) At(now time.Time) TimeRange {
-	return RangeAt(now,m)
+	return RangeAt(now, m)
 }
 
-func (m day) Range(b,e time.Time) TimeRange {
+func (m day) Range(b, e time.Time) TimeRange {
 	return Range(
-		Truncate(b,m),
-		Truncate(e,m),
-		)
+		Truncate(b, m),
+		Truncate(e, m),
+	)
 }
 
 func (m day) Add(now time.Time, size int) time.Time {
@@ -48,7 +47,6 @@ func (m day) Future(now time.Time, size int) time.Time {
 func Days(size int) Interval {
 	return day(size)
 }
-
 
 func (m day) Preview(o time.Time) time.Time {
 

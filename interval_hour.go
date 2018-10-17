@@ -22,18 +22,18 @@ func Hours(size int) Interval {
 
 func (m hour) To(b time.Time, size int) TimeRange {
 	return RangeTo(
-		Truncate(b,m),
+		Truncate(b, m),
 		hour(size))
 }
 
 func (m hour) At(now time.Time) TimeRange {
-	return RangeAt(now,m)
+	return RangeAt(now, m)
 }
 
-func (m hour) Range(b,e time.Time) TimeRange {
+func (m hour) Range(b, e time.Time) TimeRange {
 	return Range(
-		Truncate(b,m),
-		Truncate(e,m),
+		Truncate(b, m),
+		Truncate(e, m),
 	)
 }
 
@@ -54,7 +54,7 @@ func (m hour) Current(o time.Time) time.Time {
 }
 
 func (m hour) Preview(o time.Time) time.Time {
-	return preview(o,m)
+	return preview(o, m)
 }
 
 func (m hour) IsWhole(now time.Time) bool {

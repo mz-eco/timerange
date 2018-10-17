@@ -23,18 +23,18 @@ func (m week) Now() TimeRange {
 
 func (m week) To(b time.Time, size int) TimeRange {
 	return RangeTo(
-		Truncate(b,m),
+		Truncate(b, m),
 		week(size))
 }
 
 func (m week) At(now time.Time) TimeRange {
-	return RangeAt(now,m)
+	return RangeAt(now, m)
 }
 
-func (m week) Range(b,e time.Time) TimeRange {
+func (m week) Range(b, e time.Time) TimeRange {
 	return Range(
-		Truncate(b,m),
-		Truncate(e,m),
+		Truncate(b, m),
+		Truncate(e, m),
 	)
 }
 
@@ -51,7 +51,7 @@ func (m week) IsWhole(now time.Time) bool {
 }
 
 func (m week) Preview(o time.Time) time.Time {
-	return m.Current(o).AddDate(0,0,-7)
+	return m.Current(o).AddDate(0, 0, -7)
 }
 
 func (m week) AddTo(o time.Time) time.Time {

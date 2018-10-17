@@ -64,7 +64,6 @@ func (m TimeRange) Trim(iv Whole) TimeRange {
 	return m.TrimLeft(iv).TrimRight(iv)
 }
 
-
 func (m TimeRange) TrimRight(iv Whole) TimeRange {
 
 	if iv.IsWhole(m.e) {
@@ -292,7 +291,6 @@ func RangeTo(b time.Time, iv Interval) TimeRange {
 		b,
 		iv.AddTo(b))
 }
-
 
 //split time range via interval, see also Iterator
 func Split(p TimeRange, iv Interval) Blocks {
