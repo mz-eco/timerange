@@ -26,18 +26,18 @@ func (m minute) Now() TimeRange {
 
 func (m minute) To(b time.Time, size int) TimeRange {
 	return RangeTo(
-		Truncate(b,m),
+		Truncate(b, m),
 		minute(size))
 }
 
 func (m minute) At(now time.Time) TimeRange {
-	return RangeAt(now,m)
+	return RangeAt(now, m)
 }
 
-func (m minute) Range(b,e time.Time) TimeRange {
+func (m minute) Range(b, e time.Time) TimeRange {
 	return Range(
-		Truncate(b,m),
-		Truncate(e,m),
+		Truncate(b, m),
+		Truncate(e, m),
 	)
 }
 
@@ -58,7 +58,7 @@ func (m minute) Current(o time.Time) time.Time {
 }
 
 func (m minute) Preview(o time.Time) time.Time {
-	return preview(o,m)
+	return preview(o, m)
 }
 
 func (m minute) IsWhole(now time.Time) bool {
