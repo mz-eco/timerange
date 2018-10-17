@@ -138,6 +138,76 @@ func TestRangeTo(t *testing.T) {
 		"Week",
 	)
 
+}
+
+func TestConstruct(t *testing.T) {
+
+	assert.Equal(
+		t,
+		Days(10),
+		10*Day)
+
+	assert.Equal(
+		t,
+		Years(10),
+		10*Year)
+	assert.Equal(
+		t,
+		Months(10),
+		10*Month)
+	assert.Equal(
+		t,
+		Hours(10),
+		10*Hour)
+	assert.Equal(
+		t,
+		Minutes(10),
+		10*Minute)
+	assert.Equal(
+		t,
+		Seconds(10),
+		10*Second)
+	assert.Equal(
+		t,
+		Weeks(10),
+		10*Week)
+
+}
+
+func TestDay_Range(t *testing.T) {
+
+	begin := Second.Date(2018,1,1,12,12,12)
+	end := Second.Date(2018,1,20,12,12,12)
+
+	assert.Equal(
+		t,
+		Day.Range(begin,end),
+		Range(Truncate(begin,Day),Truncate(end,Day)))
+
+	assert.Equal(
+		t,
+		Month.Range(begin,end),
+		Range(Truncate(begin,Month),Truncate(end,Month)))
+	assert.Equal(
+		t,
+		Year.Range(begin,end),
+		Range(Truncate(begin,Year),Truncate(end,Year)))
+	assert.Equal(
+		t,
+		Hour.Range(begin,end),
+		Range(Truncate(begin,Hour),Truncate(end,Hour)))
+	assert.Equal(
+		t,
+		Minute.Range(begin,end),
+		Range(Truncate(begin,Minute),Truncate(end,Minute)))
+	assert.Equal(
+		t,
+		Second.Range(begin,end),
+		Range(Truncate(begin,Second),Truncate(end,Second)))
+	assert.Equal(
+		t,
+		Week.Range(begin,end),
+		Range(Truncate(begin,Week),Truncate(end,Week)))
 
 }
 
