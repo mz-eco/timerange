@@ -67,7 +67,7 @@ func (m TimeRange) Trim(iv Whole) TimeRange {
 func (m TimeRange) TrimRight(iv Whole) TimeRange {
 
 	if iv.IsWhole(m.e) {
-		return Range(m.e, m.e)
+		return Range(m.b, m.e)
 	}
 
 	e := iv.Current(m.e)
@@ -82,7 +82,7 @@ func (m TimeRange) TrimRight(iv Whole) TimeRange {
 func (m TimeRange) TrimLeft(iv Whole) TimeRange {
 
 	if iv.IsWhole(m.b) {
-		return Range(m.b, m.b)
+		return Range(m.b, m.e)
 	}
 
 	b := iv.Next(m.b)

@@ -210,6 +210,11 @@ func TestTimeRange_Trim(t *testing.T) {
 		tr.Trim(Month),
 		RangeTo(now,Month))
 
+	assert.Equal(
+		t,
+		RangeAt(now,Month).Trim(Day),
+		RangeTo(now,Month))
+
 }
 
 func TestSubTwoDays(t *testing.T) {

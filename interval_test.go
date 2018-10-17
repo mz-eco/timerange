@@ -16,6 +16,7 @@ func Test_Allow(t *testing.T) {
 			5 * Day,
 			5 * Month,
 			5 * Year,
+			5*Week,
 			Duration(4 * time.Hour),
 		}
 
@@ -26,6 +27,7 @@ func Test_Allow(t *testing.T) {
 			-5 * Day,
 			-5 * Month,
 			-5 * Year,
+			-5*Week,
 			Duration(-4 * time.Hour),
 		}
 
@@ -36,6 +38,7 @@ func Test_Allow(t *testing.T) {
 			0 * Day,
 			0 * Month,
 			0 * Year,
+			0*Week,
 			Duration(0),
 		}
 
@@ -84,6 +87,106 @@ func Test_Now(t *testing.T) {
 		t,
 		Second.Now(),
 		RangeAt(time.Now(), Second))
+
+}
+
+func TestRangeTo(t *testing.T) {
+
+	now := time.Date(2018, 1, 1, 12, 12, 12, 0, time.Local)
+
+
+	assert.Equal(
+		t,
+		Year.To(now,4),
+		RangeAt(now,4*Year),
+		"Year",
+	)
+	assert.Equal(
+		t,
+		Month.To(now,4),
+		RangeAt(now,4*Month),
+		"Month",
+	)
+	assert.Equal(
+		t,
+		Day.To(now,4),
+		RangeAt(now,4*Day),
+		"Day",
+	)
+	assert.Equal(
+		t,
+		Hour.To(now,4),
+		RangeAt(now,4*Hour),
+		"Hour",
+	)
+	assert.Equal(
+		t,
+		Minute.To(now,4),
+		RangeAt(now,4*Minute),
+		"Minute",
+	)
+	assert.Equal(
+		t,
+		Second.To(now,4),
+		RangeAt(now,4*Second),
+		"Second",
+	)
+	assert.Equal(
+		t,
+		Week.To(now,4),
+		RangeAt(now,4*Week),
+		"Week",
+	)
+
+
+}
+
+func Test_At(t *testing.T) {
+
+	now := time.Date(2018, 1, 1, 12, 12, 12, 0, time.Local)
+
+	assert.Equal(
+		t,
+		Year.At(now),
+		RangeAt(now,Year),
+		"Year",
+		)
+	assert.Equal(
+		t,
+		Month.At(now),
+		RangeAt(now,Month),
+		"Month",
+	)
+	assert.Equal(
+		t,
+		Day.At(now),
+		RangeAt(now,Day),
+		"Day",
+	)
+	assert.Equal(
+		t,
+		Hour.At(now),
+		RangeAt(now,Hour),
+		"Hour",
+	)
+	assert.Equal(
+		t,
+		Minute.At(now),
+		RangeAt(now,Minute),
+		"Minute",
+	)
+	assert.Equal(
+		t,
+		Second.At(now),
+		RangeAt(now,Second),
+		"Second",
+	)
+	assert.Equal(
+		t,
+		Week.At(now),
+		RangeAt(now,Week),
+		"Week",
+	)
 
 }
 
