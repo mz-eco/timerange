@@ -1,4 +1,6 @@
 # TimeRange - 时间区间
+[![Build Status](https://www.travis-ci.org/mz-eco/timerange.svg?branch=master)](https://www.travis-ci.org/mz-eco/timerange)
+
 描述一个 [begin,end) 的开闭型时间区间、提供对时间区间的操作函数
 
 ## Install
