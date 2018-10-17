@@ -1,6 +1,9 @@
 # TimeRange - 时间区间
 [![Build Status](https://www.travis-ci.org/mz-eco/timerange.svg?branch=master)](https://www.travis-ci.org/mz-eco/timerange)
 [![codecov](https://codecov.io/gh/mz-eco/timerange/branch/master/graph/badge.svg)](https://codecov.io/gh/mz-eco/timerange)
+[![Go Report Card](https://goreportcard.com/badge/github.com/mz-eco/timerange)](https://goreportcard.com/report/github.com/mz-eco/timerange)
+
+
 描述一个 [begin,end) 的开闭型时间区间、提供对时间区间的操作函数
 
 ## Install
