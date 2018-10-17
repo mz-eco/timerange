@@ -181,6 +181,37 @@ func TestAddTwoDays(t *testing.T) {
 	)
 }
 
+func TestTimeRange_BeginEnd(t *testing.T) {
+
+	now := Month.Date(2018,9)
+	tr := RangeAt(now,1*Month)
+
+	assert.Equal(
+		t,
+		tr.Begin(),
+		Begin(now,Month))
+
+	assert.Equal(
+		t,
+		tr.End(),
+		End(now,Month))
+}
+
+func TestTimeRange_Trim(t *testing.T) {
+
+	now := Month.Date(2018,time.June)
+	head := now.AddDate(0,0,-3)
+	tail := Next(now,Month).AddDate(0,0,3)
+
+	tr := Range(head,tail)
+
+	assert.Equal(
+		t,
+		tr.Trim(Month),
+		RangeTo(now,Month))
+
+}
+
 func TestSubTwoDays(t *testing.T) {
 	for index, iv := range tSubTowDays {
 		tTimeEqual(
