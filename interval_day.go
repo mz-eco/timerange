@@ -37,13 +37,6 @@ func (m day) Add(now time.Time, size int) time.Time {
 	return day(size).AddTo(now)
 }
 
-func (m day) Future(now time.Time, size int) time.Time {
-
-	return m.Add(
-		m.Current(now),
-		size)
-}
-
 func Days(size int) Interval {
 	return day(size)
 }
@@ -79,10 +72,6 @@ func (m day) IsWhole(now time.Time) bool {
 
 func (m day) AddTo(o time.Time) time.Time {
 	return o.AddDate(0, 0, int(m))
-}
-
-func (m day) GetSize() (days int, duration time.Duration) {
-	return int(m), 0
 }
 
 func (m day) Allow() Allow {

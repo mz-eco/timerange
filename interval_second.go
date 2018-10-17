@@ -30,6 +30,10 @@ func (m second) At(now time.Time) TimeRange {
 	return RangeAt(now, m)
 }
 
+func (m second) Now() TimeRange {
+	return now(m)
+}
+
 func (m second) Range(b, e time.Time) TimeRange {
 	return Range(
 		Truncate(b, m),

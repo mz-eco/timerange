@@ -29,6 +29,10 @@ func (m month) Range(b, e time.Time) TimeRange {
 	)
 }
 
+func (m month) Now() TimeRange {
+	return now(m)
+}
+
 func (m month) Next(o time.Time) time.Time {
 	var (
 		y, mm, _ = o.Date()

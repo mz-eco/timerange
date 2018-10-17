@@ -286,10 +286,11 @@ func RangeAt(now time.Time, w WholeInterval) TimeRange {
 	)
 }
 
-func RangeTo(b time.Time, iv Interval) TimeRange {
+func RangeTo(b time.Time, iv ...Interval) TimeRange {
+
 	return Range(
 		b,
-		iv.AddTo(b))
+		Add(b, iv...))
 }
 
 //split time range via interval, see also Iterator

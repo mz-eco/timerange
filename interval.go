@@ -40,12 +40,6 @@ type Interval interface {
 	Allow() Allow
 }
 
-//固定长度的时间间隔
-type FixedInterval interface {
-	Interval
-	GetSize() (days int, duration time.Duration)
-}
-
 //可取整的时间间隔
 type Whole interface {
 

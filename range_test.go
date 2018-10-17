@@ -1,6 +1,7 @@
 package timerange
 
 import (
+	"github.com/magiconair/properties/assert"
 	"reflect"
 	"testing"
 	"time"
@@ -148,6 +149,22 @@ func TestBegin(t *testing.T) {
 	}
 }
 
+func TestEnd(t *testing.T) {
+
+	var (
+		next  = Day.Date(2018, 1, 2)
+		now   = next.Add(-12 * time.Hour)
+		equal = next.Add(-1 * time.Nanosecond)
+	)
+
+	assert.Equal(
+		t,
+		End(now, Day),
+		equal,
+		"days not equal",
+	)
+}
+
 func TestAddTwoDays(t *testing.T) {
 	for index, iv := range tAddTwoDays {
 		tTimeEqual(
@@ -217,6 +234,18 @@ func TestTimeRange_Equal(t *testing.T) {
 	if !(RangeTo(tDate, Day).Equal(RangeTo(tDate, 24*Hour))) {
 		t.Errorf("time range not equal")
 	}
+}
+
+func TestTimeRange_Size(t *testing.T) {
+
+	var (
+		tr          = RangeTo(Year.Date(2018), 128*Day, 12*Hour, 12*Minute)
+		days, hours = tr.Size()
+	)
+
+	assert.Equal(t, days, 128, "days is not 128")
+	assert.Equal(t, hours, 12*time.Hour+12*time.Minute, "hours is not 12")
+
 }
 
 func TestNewSub(t *testing.T) {

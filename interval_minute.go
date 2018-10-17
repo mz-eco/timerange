@@ -69,10 +69,6 @@ func (m minute) AddTo(o time.Time) time.Time {
 	return o.Add(time.Duration(m) * time.Minute)
 }
 
-func (m minute) GetSize() (days int, duration time.Duration) {
-	return 0, time.Duration(m) * time.Minute
-}
-
 func (m minute) Allow() Allow {
 
 	switch {

@@ -4,6 +4,10 @@ import "time"
 
 type today int
 
+func (m today) Range() TimeRange {
+	return RangeTo(m.Day(), Day)
+}
+
 func (m today) Day() time.Time {
 	return Truncate(time.Now(), Day)
 }

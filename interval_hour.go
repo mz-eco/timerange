@@ -37,6 +37,10 @@ func (m hour) Range(b, e time.Time) TimeRange {
 	)
 }
 
+func (m hour) Now() TimeRange {
+	return now(m)
+}
+
 func (m hour) GetValue() time.Duration {
 	return time.Duration(m)
 }
@@ -63,10 +67,6 @@ func (m hour) IsWhole(now time.Time) bool {
 
 func (m hour) AddTo(o time.Time) time.Time {
 	return o.Add(time.Duration(m) * time.Hour)
-}
-
-func (m hour) GetSize() (days int, duration time.Duration) {
-	return 0, time.Duration(m) * time.Hour
 }
 
 func (m hour) Allow() Allow {
