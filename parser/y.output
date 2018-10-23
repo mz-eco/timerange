@@ -1,0 +1,312 @@
+
+state 0
+	$accept: .range $end 
+
+	num  shift 6
+	stmt  shift 7
+	'['  shift 3
+	.  error
+
+	date  goto 4
+	time  goto 5
+	datetime  goto 2
+	range  goto 1
+
+state 1
+	$accept:  range.$end 
+
+	$end  accept
+	.  error
+
+
+state 2
+	range:  datetime.',' datetime 
+	range:  datetime.',' offset 
+
+	','  shift 8
+	.  error
+
+
+state 3
+	range:  '['.datetime ',' datetime ')' 
+
+	num  shift 6
+	stmt  shift 7
+	.  error
+
+	date  goto 4
+	time  goto 5
+	datetime  goto 9
+
+state 4
+	datetime:  date.split time 
+	datetime:  date.    (12)
+
+	' '  shift 11
+	'T'  shift 12
+	.  reduce 12 (src line 51)
+
+	split  goto 10
+
+state 5
+	datetime:  time.    (13)
+
+	.  reduce 13 (src line 52)
+
+
+state 6
+	date:  num.    (14)
+	date:  num.'-' num 
+	time:  num.':' num 
+	time:  num.':' num ':' num 
+
+	'-'  shift 13
+	':'  shift 14
+	.  reduce 14 (src line 56)
+
+
+state 7
+	date:  stmt.'-' num '-' num 
+	date:  stmt.    (17)
+
+	'-'  shift 15
+	.  reduce 17 (src line 59)
+
+
+state 8
+	range:  datetime ','.datetime 
+	range:  datetime ','.offset 
+
+	num  shift 6
+	stmt  shift 7
+	'+'  shift 18
+	'-'  shift 19
+	.  error
+
+	date  goto 4
+	time  goto 5
+	datetime  goto 16
+	offset  goto 17
+
+state 9
+	range:  '[' datetime.',' datetime ')' 
+
+	','  shift 20
+	.  error
+
+
+state 10
+	datetime:  date split.time 
+
+	num  shift 22
+	.  error
+
+	time  goto 21
+
+state 11
+	split:  ' '.    (1)
+
+	.  reduce 1 (src line 35)
+
+
+state 12
+	split:  'T'.    (2)
+
+	.  reduce 2 (src line 35)
+
+
+state 13
+	date:  num '-'.num 
+
+	num  shift 23
+	.  error
+
+
+state 14
+	time:  num ':'.num 
+	time:  num ':'.num ':' num 
+
+	num  shift 24
+	.  error
+
+
+state 15
+	date:  stmt '-'.num '-' num 
+
+	num  shift 25
+	.  error
+
+
+state 16
+	range:  datetime ',' datetime.    (3)
+
+	.  reduce 3 (src line 37)
+
+
+state 17
+	range:  datetime ',' offset.    (4)
+
+	.  reduce 4 (src line 38)
+
+
+state 18
+	offset:  '+'.size interval 
+
+	num  shift 27
+	big  shift 29
+	stmt  shift 28
+	.  error
+
+	size  goto 26
+
+state 19
+	offset:  '-'.size interval 
+
+	num  shift 27
+	big  shift 29
+	stmt  shift 28
+	.  error
+
+	size  goto 30
+
+state 20
+	range:  '[' datetime ','.datetime ')' 
+
+	num  shift 6
+	stmt  shift 7
+	.  error
+
+	date  goto 4
+	time  goto 5
+	datetime  goto 31
+
+state 21
+	datetime:  date split time.    (11)
+
+	.  reduce 11 (src line 50)
+
+
+state 22
+	time:  num.':' num 
+	time:  num.':' num ':' num 
+
+	':'  shift 14
+	.  error
+
+
+state 23
+	date:  num '-' num.    (15)
+
+	.  reduce 15 (src line 57)
+
+
+state 24
+	time:  num ':' num.    (18)
+	time:  num ':' num.':' num 
+
+	':'  shift 32
+	.  reduce 18 (src line 62)
+
+
+state 25
+	date:  stmt '-' num.'-' num 
+
+	'-'  shift 33
+	.  error
+
+
+state 26
+	offset:  '+' size.interval 
+
+	interval  shift 34
+	.  error
+
+
+state 27
+	size:  num.    (6)
+
+	.  reduce 6 (src line 43)
+
+
+state 28
+	size:  stmt.    (7)
+
+	.  reduce 7 (src line 44)
+
+
+state 29
+	size:  big.    (8)
+
+	.  reduce 8 (src line 45)
+
+
+state 30
+	offset:  '-' size.interval 
+
+	interval  shift 35
+	.  error
+
+
+state 31
+	range:  '[' datetime ',' datetime.')' 
+
+	')'  shift 36
+	.  error
+
+
+state 32
+	time:  num ':' num ':'.num 
+
+	num  shift 37
+	.  error
+
+
+state 33
+	date:  stmt '-' num '-'.num 
+
+	num  shift 38
+	.  error
+
+
+state 34
+	offset:  '+' size interval.    (9)
+
+	.  reduce 9 (src line 47)
+
+
+state 35
+	offset:  '-' size interval.    (10)
+
+	.  reduce 10 (src line 48)
+
+
+state 36
+	range:  '[' datetime ',' datetime ')'.    (5)
+
+	.  reduce 5 (src line 39)
+
+
+state 37
+	time:  num ':' num ':' num.    (19)
+
+	.  reduce 19 (src line 63)
+
+
+state 38
+	date:  stmt '-' num '-' num.    (16)
+
+	.  reduce 16 (src line 58)
+
+
+16 terminals, 8 nonterminals
+20 grammar rules, 39/8000 states
+0 shift/reduce, 0 reduce/reduce conflicts reported
+57 working sets used
+memory: parser 17/120000
+17 extra closures
+36 shift entries, 1 exceptions
+12 goto entries
+6 entries saved by goto default
+Optimizer space used: output 43/120000
+43 table entries, 0 zero
+maximum spread: 16, maximum offset: 20
